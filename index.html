@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PayFlow — Fast, Secure, Global</title>
+  <meta name="description" content="A clean, modern fintech landing page you can embed in Google Sites. Jeton‑style hero, features, cards, FAQs, and CTA." />
+  <meta name="theme-color" content="#0b0e14" />
+  <style>
+    :root{
+      --bg:#0b0e14;           /* page background */
+      --panel:#101522;        /* card/header background */
+      --muted:#a6b0c3;        /* secondary text */
+      --text:#eaf1ff;         /* primary text */
+      --brand:#ff7a1a;        /* accent */
+      --brand-2:#ffb703;      /* accent 2 */
+      --success:#22c55e;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+      --ring: 0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), 0 2px 10px rgba(0,0,0,.2);
+      --grid-max: 1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--grid-max);margin:auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(11,14,20,.9),rgba(11,14,20,.6) 80%,transparent);backdrop-filter:saturate(140%) blur(8px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+    .logo-badge{width:36px;height:36px;border-radius:50%;background:conic-gradient(from 220deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:0 6px 18px rgba(255,122,26,.35)}
+    .logo svg{filter:drop-shadow(0 4px 10px rgba(0,0,0,.25))}
+    .nav-links{display:flex;gap:24px;align-items:center}
+    .nav-links a{opacity:.9}
+    .nav-cta{display:flex;gap:12px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:10px;border:1px solid color-mix(in oklab, var(--text) 10%, transparent);padding:10px 14px;border-radius:999px;transition:.2s;box-shadow:none}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));border:none;color:#121212;box-shadow:0 8px 25px rgba(255,122,26,.35)}
+    .btn.ghost{background:rgba(255,255,255,.04)}
+    .menu{display:none}
+
+    /* Hero */
+    .hero{position:relative;padding:72px 0 40px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+    .eyebrow{color:var(--brand-2);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+    h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:10px 0 16px}
+    .sub{color:var(--muted);max-width:60ch;margin-bottom:26px}
+    .hero-card{background:radial-gradient(1200px 400px at 10% -10%, rgba(255,122,26,.08), transparent 70%),
+               linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
+               border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .stat{background:#0f1522;border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:14px;text-align:center}
+    .stat .kpi{font-weight:800;font-size:1.1rem}
+    .phone{aspect-ratio:9/18;border-radius:28px;border:1px solid rgba(255,255,255,.08);padding:16px;background:linear-gradient(180deg,#0c111b,#0a0f19);box-shadow:var(--shadow)}
+    .card-chip{width:44px;height:28px;border-radius:8px;background:linear-gradient(90deg,#555,#ddd);margin:4px 0}
+
+    /* Trust row */
+    .trust{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;opacity:.8;margin:30px 0}
+    .trust div{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px;text-align:center}
+
+    /* Feature grid */
+    section{padding:40px 0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .card h3{margin:6px 0 8px}
+    .badge{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:999px}
+
+    /* Steps */
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .step{position:relative;padding-top:10px}
+    .step::before{content:attr(data-n);position:absolute;top:-10px;left:-10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#111;font-weight:900;border-radius:10px;padding:6px 10px;font-size:.9rem;box-shadow:0 6px 18px rgba(255,122,26,.35)}
+
+    /* Showcase cards */
+    .showcase{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+    .tile{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:18px;min-height:200px}
+
+    /* Testimonials */
+    .testis{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    blockquote{margin:0}
+    .quote{font-style:italic;color:#cad5eb}
+
+    /* FAQ */
+    .faq{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    details{background:var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px}
+    summary{cursor:pointer;font-weight:600}
+    details[open]{outline:var(--ring)}
+
+    /* CTA */
+    .cta{display:grid;grid-template-columns:2fr 1fr;gap:18px;align-items:center}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(255,255,255,.08);margin-top:50px}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:20px;padding:28px 0}
+    .foot a{color:var(--muted)}
+    .subtle{color:var(--muted);font-size:.95rem}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid,.grid,.steps,.testis,.faq,.cta,.foot{grid-template-columns:1fr}
+      .showcase{grid-template-columns:1fr}
+      .trust{grid-template-columns:repeat(3,1fr)}
+      .nav-links{display:none}
+      .menu{display:inline-flex}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Main">
+      <a class="logo" href="#">
+        <span class="logo-badge" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2l3.5 6.5L22 9l-5 4.9L18 21l-6-3.2L6 21l1-7.1L2 9l6.5-.5L12 2z" fill="#111"/>
+          </svg>
+        </span>
+        <span>PayFlow</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#fees">Fees</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn ghost" href="#">Sign in</a>
+        <a class="btn primary" href="#">Open account</a>
+        <button class="menu btn ghost" aria-label="Open menu" onclick="toggleMenu()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Global payments for everyone</div>
+        <h1>Send, Spend, and Receive money worldwide—fast and secure.</h1>
+        <p class="sub">Multi‑currency accounts, instant transfers, and a sleek card. Built with bank‑grade security and transparent pricing. Launch in minutes, not weeks.</p>
+        <div class="nav-cta" style="gap:14px;flex-wrap:wrap">
+          <a class="btn primary" href="#">Get started free</a>
+          <a class="btn ghost" href="#features">See features</a>
+        </div>
+        <div class="stat-row" aria-label="Key product metrics">
+          <div class="stat"><div class="kpi">180+</div><div class="subtle">Countries supported</div></div>
+          <div class="stat"><div class="kpi">45+</div><div class="subtle">Currencies</div></div>
+          <div class="stat"><div class="kpi"><span aria-label="99 point 995 percent">99.995%</span></div><div class="subtle">Uptime SLA</div></div>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="App preview">
+        <div class="phone">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v4h4v2h-4v4h-2v-4H7v-2h4V7h2z"/></svg>Balance</div>
+            <div class="card-chip" aria-hidden="true"></div>
+          </div>
+          <h3 style="margin:10px 0 4px">$12,480.22</h3>
+          <p class="subtle" style="margin:0 0 12px">Multi‑currency wallet</p>
+          <div class="badge" style="margin-bottom:10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 7h16v10H4z"/></svg>Virtual • Physical</div>
+          <div class="tile" style="min-height:auto">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span class="subtle">Today</span><span class="subtle">−$42.35</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span class="subtle">Card top‑up</span><span class="subtle">+$200.00</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="subtle">FX conversion</span><span class="subtle">−€75.10</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container trust" aria-label="Trusted by">
+      <div>• TechCrunch</div>
+      <div>• Wired</div>
+      <div>• Financial Times</div>
+      <div>• Forbes</div>
+      <div>• The Verge</div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <h2 style="margin:0 0 14px">Everything you need to move money</h2>
+      <p class="sub" style="margin:0 0 18px">From simple peer‑to‑peer to global payouts, manage finances with one intuitive account.</p>
+      <div class="grid">
+        <article class="card" role="article">
+          <div class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4h18v12H3z"/></svg>Multi‑currency IBANs</div>
+          <h3>Receive like a local</h3>
+          <p class="subtle">Get local account details in USD, EUR, GBP and more. Share them to receive transfers with no hidden fees.</p>
+        </article>
+        <article class="card">
+          <div class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l7 7-7 7-7-7z"/></svg>Instant exchange</div>
+          <h3>Great FX rates</h3>
+          <p class="subtle">Swap between 45+ currencies at interbank rates with clear, upfront pricing.</p>
+        </article>
+        <article class="card">
+          <div class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z"/></svg>Secure by design</div>
+          <h3>Bank‑grade protection</h3>
+          <p class="subtle">2FA, device binding, and real‑time risk checks keep your account safe around the clock.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how">
+    <div class="container">
+      <h2 style="margin:0 0 14px">Get started in three steps</h2>
+      <div class="steps">
+        <div class="card step" data-n="1"><h3>Create your account</h3><p class="subtle">Sign up with your email and verify your identity. It only takes a few minutes.</p></div>
+        <div class="card step" data-n="2"><h3>Add money</h3><p class="subtle">Top up via card, bank transfer, or payouts from your clients.</p></div>
+        <div class="card step" data-n="3"><h3>Send & spend</h3><p class="subtle">Transfer globally, pay bills, and use your virtual or physical card anywhere.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase cards -->
+  <section>
+    <div class="container showpiece">
+      <div class="showcase">
+        <div class="tile">
+          <h3>Send money fast</h3>
+          <p class="subtle">Transfer domestically or cross‑border with transparent fees and live tracking.</p>
+          <div class="badge" style="margin-top:auto;display:inline-flex">From $0.50 per transfer</div>
+        </div>
+        <div class="tile">
+          <h3>Spend smarter</h3>
+          <p class="subtle">Issue virtual cards for one‑time purchases and subscriptions.</p>
+        </div>
+        <div class="tile">
+          <h3>Get paid</h3>
+          <p class="subtle">Share payment links or QR codes. Settle to your wallet instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section aria-labelledby="testimonials">
+    <div class="container">
+      <h2 id="testimonials" style="margin:0 0 14px">Loved by freelancers & teams</h2>
+      <div class="testis">
+        <figure class="card"><blockquote class="quote">“Switched from my bank and never looked back. FX is fair and transfers land the same day.”</blockquote><figcaption class="subtle">— Lina, Designer</figcaption></figure>
+        <figure class="card"><blockquote class="quote">“We pay 200+ contractors monthly. The bulk payouts feature saves us hours.”</blockquote><figcaption class="subtle">— Marco, COO</figcaption></figure>
+        <figure class="card"><blockquote class="quote">“Virtual cards for each SaaS tool = zero surprise renewals.”</blockquote><figcaption class="subtle">— Priya, PM</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h2 style="margin:0 0 14px">Frequently asked questions</h2>
+      <div class="faq" role="list">
+        <details>
+          <summary>Is PayFlow a real bank?</summary>
+          <p class="subtle">No. We’re a payment institution that partners with licensed banks to safeguard your funds.</p>
+        </details>
+        <details>
+          <summary>What fees do you charge?</summary>
+          <p class="subtle">Account opening is free. Transfers and card usage have low, transparent fees shown before you confirm.</p>
+        </details>
+        <details>
+          <summary>Do you support business accounts?</summary>
+          <p class="subtle">Yes—business onboarding includes extra verification. Shared access and team cards are available.</p>
+        </details>
+        <details>
+          <summary>How fast are transfers?</summary>
+          <p class="subtle">Local rails are near‑instant in many countries. International transfers vary by corridor (typically same‑day).</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container cta" aria-labelledby="cta">
+    <div>
+      <h2 id="cta" style="margin:0 0 10px">Ready to move money smarter?</h2>
+      <p class="subtle">Open an account in minutes and join customers in 180+ countries.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn primary" href="#">Create free account</a>
+      <a class="btn ghost" href="#">Talk to sales</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div>
+        <div class="logo" style="margin-bottom:12px">
+          <span class="logo-badge" aria-hidden="true"></span>
+          <span>PayFlow</span>
+        </div>
+        <p class="subtle">PayFlow is a demo landing page template. Replace content with your brand details and compliance text.</p>
+      </div>
+      <nav aria-label="Footer">
+        <h4>Product</h4>
+        <a href="#features">Features</a><br/>
+        <a href="#how">How it works</a><br/>
+        <a href="#">Pricing</a>
+      </nav>
+      <nav>
+        <h4>Company</h4>
+        <a href="#">About</a><br/>
+        <a href="#">Careers</a><br/>
+        <a href="#">Contact</a>
+      </nav>
+      <nav>
+        <h4>Legal</h4>
+        <a href="#">Terms</a><br/>
+        <a href="#">Privacy</a><br/>
+        <a href="#">Cookies</a>
+      </nav>
+    </div>
+    <div class="container" style="padding:0 0 28px"><small class="subtle">© <span id="y"></span> PayFlow. All rights reserved.</small></div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    function toggleMenu(){
+      const links = document.querySelector('.nav-links');
+      if(!links) return;
+      const visible = getComputedStyle(links).display !== 'none';
+      links.style.display = visible ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.gap = '14px';
+      links.style.background = 'rgba(16,21,34,.96)';
+      links.style.position = 'absolute';
+      links.style.top = '56px';
+      links.style.right = '20px';
+      links.style.padding = '16px';
+      links.style.border = '1px solid rgba(255,255,255,.06)';
+      links.style.borderRadius = '12px';
+      links.style.boxShadow = 'var(--shadow)';
+    }
+  </script>
+</body>
+</html>
