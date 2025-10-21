@@ -4,247 +4,51 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Weather, Policy, and Topic Modeling of 311 Reports on Homelessness in San Diego</title>
-  <meta name="description" content="Exploring how weather and policy relate to encampment migration in San Diego using topic modeling of homelessness-related 311 reports." />
+  <meta name="description" content="A data‑driven look at how environmental conditions and municipal policy intersect with the topics reported in 311 calls, and how these patterns relate to e"/>
   <meta name="theme-color" content="#ffffff" />
-  <style>
-    :root{
-      /* Light theme */
-      --bg:#f7f9fc;          /* page background */
-      --panel:#ffffff;       /* cards/sheets */
-      --border:#e5eaf2;      /* subtle borders */
-      --text:#0f172a;        /* main text */
-      --muted:#5b6475;       /* secondary text */
-      --brand:#2f6fff;       /* primary brand */
-      --brand-2:#8b5cf6;     /* secondary brand */
-      --accent:#22c55e;      /* accent */
-      --radius:18px;         /* default radius */
-      --shadow:0 16px 40px rgba(21, 41, 82, .08), 0 2px 8px rgba(21,41,82,.06);
-      --ring:0 0 0 4px rgba(47,111,255,.15);
-      --max: 1100px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui, Segoe UI, Roboto, Inter, Arial, sans-serif}
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    .container{max-width:var(--max);margin:auto;padding:0 20px}
-
-    /* Header */
-    header.site{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.8);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-    .brand-badge{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 220deg, var(--brand), var(--brand-2));box-shadow:0 8px 20px rgba(47,111,255,.25)}
-    .links{display:flex;gap:16px}
-    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:9px 14px;border-radius:999px;background:#fff}
-    .btn:hover{box-shadow:var(--ring)}
-
-    /* Hero */
-    .hero{padding:72px 0 42px}
-    h1{font-size:clamp(1.9rem,4.6vw,3.2rem);line-height:1.12;margin:8px 0 12px}
-    .subtitle{color:var(--muted);margin:0}
-
-    /* Gradient banner behind title/description */
-    .gradient-wrap{position:relative;border-radius:26px;padding:28px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);background:linear-gradient(135deg, rgba(47,111,255,.12), rgba(139,92,246,.12));}
-    .gradient-wrap::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 20% 0%, rgba(255,255,255,.7), transparent 70%), radial-gradient(60% 60% at 100% 100%, rgba(255,255,255,.4), transparent 70%);pointer-events:none}
-
-    /* Problem panel */
-    .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-    h2{margin:0 0 10px}
-    p{margin:0 0 12px}
-
-    /* Right overlay sidebar (sheet) */
-    .sheet{position:fixed;top:0;right:0;height:100dvh;width:min(420px, 92vw);background:var(--panel);border-left:1px solid var(--border);box-shadow:-20px 0 50px rgba(21,41,82,.12);transform:translateX(100%);transition:transform .28s ease;z-index:60;display:flex;flex-direction:column}
-    .sheet.open{transform:translateX(0)}
-    .sheet-head{display:flex;align-items:center;justify-content:space-between;padding:16px 16px;border-bottom:1px solid var(--border)}
-    .sheet-title{font-weight:800}
-    .sheet-body{padding:16px;overflow:auto}
-    .sheet-nav{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border)}
-    .chip{padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:#fff}
-    .chip.active{border-color:color-mix(in oklab, var(--brand) 45%, var(--border));box-shadow:var(--ring)}
-
-    /* Hide top links on home to preserve minimal first page */
-    .links.hidden{display:none}
-
-    /* Footer */
-    footer{border-top:1px solid var(--border);margin-top:44px}
-    .foot{padding:18px 0;color:var(--muted)}
-
-    @media (max-width: 880px){
-      .links{display:none}
-    }
-  </style>
+  <link rel="stylesheet" href="assets/style.css"/>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site" id="topbar">
-    <div class="container nav">
-      <div class="brand">
-        <span class="brand-badge" aria-hidden="true"></span>
-        <span id="project-short">Weather, Policy, and Topic Modeling of 311 Reports on Homelessness in San Diego</span>
-      </div>
-      <nav class="links" aria-label="Primary">
-        <a href="#about" class="btn">About</a>
-        <a href="#311-analysis" class="btn">311 Analysis</a>
-        <a href="#migration" class="btn">Encampment Migration</a>
-        <a href="#weather" class="btn">Weather</a>
-        <a href="#policy" class="btn">Policy</a>
-        <a href="#conclusion" class="btn">Conclusion</a>
-        <a href="#data" class="btn">Data</a>
-        <a href="#team" class="btn">Team</a>
-      </nav>
-      <button id="openSheetBtn" class="btn" aria-haspopup="dialog" aria-controls="sheet" aria-expanded="false">Pages</button>
+  
+<header class="site">
+  <div class="container nav">
+    <div class="brand">
+      <span class="brand-badge" aria-hidden="true"></span>
+      <span>Weather, Policy, & Topic Modeling (San Diego)</span>
     </div>
-  </header>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="311-analysis.html">311 Analysis</a><a href="migration.html">Encampment Migration</a><a href="weather.html">Weather</a><a href="policy.html">Policy</a><a href="conclusion.html">Conclusion</a><a href="data.html">Data Description</a><a href="team.html">Team</a>
+    </nav>
+  </div>
+</header>
 
-  <!-- Home (Title + Problem Statement only) -->
   <main>
-    <section id="home" aria-labelledby="home-title" style="padding:36px 0 20px">
-      <div class="container">
-        <div class="gradient-wrap" role="region" aria-label="Project hero">
-          <h1 id="home-title">Weather, Policy, and Topic Modeling of Homelessness‑Related 311 Reports in San Diego</h1>
-          <p class="subtitle">A data‑driven look at how environmental conditions and municipal policy intersect with the <em>topics</em> reported in 311 calls, and how these patterns relate to encampment migration across the city.</p>
-        </div>
-        <article class="panel" aria-label="Problem statement" style="margin-top:20px">
-          <h2>Problem Statement</h2>
-          <p>San Diego faces recurring shifts in the distribution and persistence of homeless encampments. While weather variability (heat, rain, cold snaps) and policy actions (ordinances, sweeps, service expansions) are suspected drivers, quantitative evidence linking these factors to the <em>discourse</em> found in public 311 reports and to observed encampment migration remains limited.</p>
-          <p>This project applies <strong>topic modeling</strong> to homelessness‑related 311 requests to identify recurring themes, and examines their associations with <strong>local weather</strong>, <strong>policy timelines</strong>, and <strong>space‑time movement</strong> of encampments. Our aim is to inform humane, effective, and climate‑aware responses.</p>
-        </article>
-      </div>
+    <section class="container">
+      
+    <div class="gradient-wrap" role="region" aria-label="Project hero">
+      <h1>Weather, Policy, and Topic Modeling of 311 Reports on Homelessness in San Diego</h1>
+      <p class="subtitle">A data‑driven look at how environmental conditions and municipal policy intersect with the topics reported in 311 calls, and how these patterns relate to encampment migration across the city.</p>
+    </div>
+    
+      
+<article class="panel" aria-label="Problem statement" style="margin-top:20px">
+  <h2>Problem Statement</h2>
+  <p>San Diego faces recurring shifts in the distribution and persistence of homeless encampments. 
+  While weather variability (heat, rain, cold snaps) and policy actions (ordinances, sweeps, service expansions) 
+  are suspected drivers, quantitative evidence linking these factors to the <em>discourse</em> 
+  found in public 311 reports and to observed encampment migration remains limited.</p>
+  <p>This project applies <strong>topic modeling</strong> to homelessness‑related 311 requests to identify recurring themes, 
+  and examines their associations with <strong>local weather</strong>, <strong>policy timelines</strong>, and 
+  <strong>space‑time movement</strong> of encampments. Our aim is to inform humane, effective, and climate‑aware responses.</p>
+</article>
+
     </section>
   </main>
+  
+<footer>
+  <div class="container foot"><small>© <span id="y"></span> Project Site</small></div>
+</footer>
+<script src="assets/site.js"></script>
 
-  <!-- Right overlay sheet with pages -->
-  <aside id="sheet" class="sheet" role="dialog" aria-modal="true" aria-label="Project pages">
-    <div class="sheet-head">
-      <div class="sheet-title" id="sheetTitle">Pages</div>
-      <button id="closeSheetBtn" class="btn" aria-label="Close panel">Close</button>
-    </div>
-    <div class="sheet-nav" role="tablist">
-      <a href="#about" role="tab" class="chip" data-target="about">About</a>
-      <a href="#311-analysis" role="tab" class="chip" data-target="311-analysis">311 Analysis</a>
-      <a href="#migration" role="tab" class="chip" data-target="migration">Encampment Migration</a>
-      <a href="#weather" role="tab" class="chip" data-target="weather">Weather</a>
-      <a href="#policy" role="tab" class="chip" data-target="policy">Policy</a>
-      <a href="#conclusion" role="tab" class="chip" data-target="conclusion">Conclusion</a>
-      <a href="#data" role="tab" class="chip" data-target="data">Data</a>
-      <a href="#team" role="tab" class="chip" data-target="team">Team</a>
-    </div>
-    <div class="sheet-body">
-      <!-- Secondary page sections live here; visible only inside sheet -->
-      <section id="about" class="page" aria-labelledby="about-title">
-        <h2 id="about-title">About</h2>
-        <p>Project motivation, scope, and research questions connecting GIS, urban policy, and NLP topic modeling.</p>
-      </section>
-
-      <section id="311-analysis" class="page" aria-labelledby="r311-title">
-        <h2 id="r311-title">311 Report Analysis</h2>
-        <p>Text preprocessing, topic models (e.g., LDA or BERTopic), validation, and interpretation of homelessness‑related themes.</p>
-      </section>
-
-      <section id="migration" class="page" aria-labelledby="migration-title">
-        <h2 id="migration-title">Homeless Encampment Migration</h2>
-        <p>Measures of spatial movement, clustering, and change over time; relating topic prevalence to movement dynamics.</p>
-      </section>
-
-      <section id="weather" class="page" aria-labelledby="weather-title">
-        <h2 id="weather-title">Weather</h2>
-        <p>Temperature, precipitation, and seasonal effects; thresholds and event days; associations with topic prevalence and encampment changes.</p>
-      </section>
-
-      <section id="policy" class="page" aria-labelledby="policy-title">
-        <h2 id="policy-title">Policy</h2>
-        <p>Ordinances, enforcement operations, outreach and shelter policies; aligning interventions with observed patterns.</p>
-      </section>
-
-      <section id="conclusion" class="page" aria-labelledby="conclusion-title">
-        <h2 id="conclusion-title">Conclusion</h2>
-        <p>Key takeaways, limitations, and implications for humane and data‑informed urban governance.</p>
-      </section>
-
-      <section id="data" class="page" aria-labelledby="data-title">
-        <h2 id="data-title">Data Description</h2>
-        <p>Sources (City of San Diego 311 API, NOAA, municipal policy docs), fields, coverage, geocoding, and processing notes.</p>
-      </section>
-
-      <section id="team" class="page" aria-labelledby="team-title">
-        <h2 id="team-title">Team</h2>
-        <p>Contributors, roles, and acknowledgments.</p>
-      </section>
-    </div>
-  </aside>
-
-  <footer>
-    <div class="container foot"><small>© <span id="y"></span> Project Site</small></div>
-  </footer>
-
-  <script>
-    const sheet = document.getElementById('sheet');
-    const openBtn = document.getElementById('openSheetBtn');
-    const closeBtn = document.getElementById('closeSheetBtn');
-    const topLinks = document.querySelector('.links');
-    const chips = Array.from(document.querySelectorAll('.chip'));
-
-    function openSheet(){
-      sheet.classList.add('open');
-      openBtn.setAttribute('aria-expanded','true');
-      // set active chip from hash
-      const hash=(location.hash||'#about').replace('#','');
-      setActive(hash);
-      focusActive();
-    }
-    function closeSheet(){
-      sheet.classList.remove('open');
-      openBtn.setAttribute('aria-expanded','false');
-    }
-    function setActive(id){
-      chips.forEach(c=>c.classList.toggle('active', c.dataset.target===id));
-      // scroll to the selected section inside the sheet
-      const target=document.getElementById(id);
-      if(target){ target.scrollIntoView({block:'start', behavior:'smooth'}); }
-    }
-    function focusActive(){
-      const activeChip=document.querySelector('.chip.active');
-      if(activeChip){ activeChip.focus(); }
-    }
-
-    // Route: open sheet when navigating to any subpage; keep home minimal.
-    function route(){
-      const h=(location.hash||'#home').toLowerCase();
-      if(h==='#home'){
-        topLinks.classList.add('hidden');
-        closeSheet();
-      } else {
-        topLinks.classList.remove('hidden');
-        openSheet();
-        setActive(h.replace('#',''));
-      }
-    }
-
-    // Link behavior for header buttons (ensure sheet opens)
-    document.addEventListener('click', (e)=>{
-      const a=e.target.closest('a[href^="#"]');
-      if(!a) return;
-      const id=a.getAttribute('href').replace('#','');
-      if(id && id!=='home'){
-        e.preventDefault();
-        history.pushState(null, '', '#'+id);
-        route();
-      }
-    });
-
-    chips.forEach(chip=>chip.addEventListener('click',(e)=>{
-      const id=e.currentTarget.dataset.target;
-      history.pushState(null,'','#'+id);
-      setActive(id);
-    }));
-
-    openBtn.addEventListener('click', openSheet);
-    closeBtn.addEventListener('click', closeSheet);
-
-    window.addEventListener('hashchange', route);
-    window.addEventListener('load', ()=>{
-      document.getElementById('y').textContent = new Date().getFullYear();
-      route();
-    });
-  </script>
 </body>
 </html>
