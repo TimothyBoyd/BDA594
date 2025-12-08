@@ -14,30 +14,131 @@
   <div class="container nav">
     <div class="brand">
       <span class="brand-badge" aria-hidden="true"></span>
-      <span>Weather, Policy, & Topic Modeling (San Diego)</span>
+      <span>Weather, Policy, &amp; Topic Modeling (San Diego)</span>
     </div>
     <nav class="navlinks" aria-label="Primary">
-      <a href="index.html">Home</a><a href="about.html">About</a><a href="311-analysis.html">311 Analysis</a><a href="migration.html">Encampment Migration</a><a href="weather.html">Weather</a><a href="policy.html">Policy</a><a href="conclusion.html">Conclusion</a><a href="data.html">Data Description</a><a href="team.html">Team</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="311-analysis.html">311 Analysis</a>
+      <a href="migration.html">Encampment Migration</a>
+      <a href="weather.html">Weather</a>
+      <a href="policy.html">Policy</a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="data.html" aria-current="page">Data Description</a>
+      <a href="team.html">Team</a>
     </nav>
   </div>
 </header>
 
-  <main>
-    <section class="container">
-      
-    <div class="" role="region" aria-label="Page title">
+<main>
+  <section class="container">
+
+    <div role="region" aria-label="Page title">
       <h1>Data Description · Weather, Policy, and Topic Modeling of 311 Reports on Homelessness in San Diego</h1>
       <p class="subtitle">Data sources and processing.</p>
     </div>
-    
-      <article class="panel"><h2>Data Description</h2><p>Sources (City of San Diego 311 API, NOAA, municipal policy documents), fields, coverage, geocoding, and processing notes.</p></article>
-    </section>
-  </main>
-  
-<footer>
-  <div class="container foot"><small>© <span id="y"></span> Project Site</small></div>
-</footer>
-<script src="assets/site.js"></script>
 
+    <article class="panel">
+      <h2>Methods: Database Management and Data Processing</h2>
+
+      <h3>Data Sources</h3>
+      <p>A summary of major datasets used is included below:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>Variables</th>
+            <th>Timespan</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>311 Homeless Encampment Calls</td>
+            <td>Location, timestamp, complaint text</td>
+            <td>varies</td>
+            <td>SDSU Hackathon</td>
+          </tr>
+          <tr>
+            <td>Policy Events (Sweeps, Bans, Shelter Changes, Action Plans)</td>
+            <td>Policy type, date, location, description</td>
+            <td>2019–2025</td>
+            <td>City &amp; County of San Diego</td>
+          </tr>
+          <tr>
+            <td>GHCN Daily Climate Data</td>
+            <td>Temperature, precipitation</td>
+            <td>1939–2024</td>
+            <td>NOAA NCEI</td>
+          </tr>
+          <tr>
+            <td>ERA5-Land Climate Data</td>
+            <td>Reanalysis temperature, dewpoint, soil moisture</td>
+            <td>1950–present</td>
+            <td>Copernicus Climate Data Store</td>
+          </tr>
+          <tr>
+            <td>Homeless Sleepers Dataset</td>
+            <td>Monthly outdoor sleepers</td>
+            <td>2014–2019</td>
+            <td>San Diego Regional Data Library</td>
+          </tr>
+          <tr>
+            <td>PITC Counts</td>
+            <td>Annual homelessness counts</td>
+            <td>2014–2025</td>
+            <td>RTFH</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Cleaning and Processing Procedures</h3>
+
+      <h4>311 Data</h4>
+      <ul>
+        <li>Removed irrelevant categories (non-encampment calls)</li>
+        <li>Standardized timestamps to UTC</li>
+        <li>Geocoded addresses</li>
+        <li>Removed duplicate entries</li>
+        <li>Cleaned text for topic modeling</li>
+        <li>Filtered dominant topics (FastTopic)</li>
+      </ul>
+
+      <h4>Policy Data</h4>
+      <ul>
+        <li>Extracted dates, jurisdictional scale (state/city/local), and type</li>
+        <li>Geocoded to nearest relevant administrative boundary</li>
+        <li>Organized into an interactive timeline using ARC Experience</li>
+      </ul>
+
+      <h4>Climate Data</h4>
+      <ul>
+        <li>Converted GHCN from daily → monthly summaries</li>
+        <li>Extracted ERA5 from netCDF and converted Kelvin → Fahrenheit</li>
+        <li>Standardized all climate variables with z-scores</li>
+        <li>Merged with homelessness time series for seasonal comparisons</li>
+      </ul>
+
+      <h3>Master Dataset Integration</h3>
+      <p>A unified spatiotemporal schema was created in which:</p>
+      <ul>
+        <li><strong>Policies</strong> = point events</li>
+        <li><strong>Weather</strong> = monthly time-series variables</li>
+        <li><strong>311 calls</strong> = heatmap inputs and topic-modeled text</li>
+      </ul>
+
+    </article>
+
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <small>© <span id="y"></span> Project Site</small>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
 </body>
 </html>
