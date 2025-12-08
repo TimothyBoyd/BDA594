@@ -14,30 +14,72 @@
   <div class="container nav">
     <div class="brand">
       <span class="brand-badge" aria-hidden="true"></span>
-      <span>Weather, Policy, & Topic Modeling (San Diego)</span>
+      <span>Weather, Policy, &amp; Topic Modeling (San Diego)</span>
     </div>
     <nav class="navlinks" aria-label="Primary">
-      <a href="index.html">Home</a><a href="about.html">About</a><a href="311-analysis.html">311 Analysis</a><a href="migration.html">Encampment Migration</a><a href="weather.html">Weather</a><a href="policy.html">Policy</a><a href="conclusion.html">Conclusion</a><a href="data.html">Data Description</a><a href="team.html">Team</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="311-analysis.html">311 Analysis</a>
+      <a href="migration.html">Encampment Migration</a>
+      <a href="weather.html">Weather</a>
+      <a href="policy.html">Policy</a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="data.html">Data Description</a>
+      <a href="team.html" aria-current="page">Team</a>
     </nav>
   </div>
 </header>
 
-  <main>
-    <section class="container">
-      
-    <div class="" role="region" aria-label="Page title">
-      <h1>Team · Weather, Policy, and Topic Modeling of 311 Reports on Homelessness in San Diego</h1>
-      <p class="subtitle">Project contributors.</p>
-    </div>
-    
-      <article class="panel"><h2>Team</h2><p>Contributors, roles, and acknowledgments.</p></article>
-    </section>
-  </main>
-  
-<footer>
-  <div class="container foot"><small>© <span id="y"></span> Project Site</small></div>
-</footer>
-<script src="assets/site.js"></script>
+<main>
+  <section class="container">
 
+    <div role="region" aria-label="Page title">
+      <h1>Team · Weather, Policy, and Topic Modeling of 311 Reports on Homelessness in San Diego</h1>
+      <p class="subtitle">Team roles and responsibilities.</p>
+    </div>
+
+    <article class="panel">
+      <h2>Team Roles and Responsibilities</h2>
+
+      <h3>Ashley Funk</h3>
+      <ul>
+        <li>Collected, cleaned, and categorized policy data from 2019–2025</li>
+        <li>Created an interactive geocoded policy map with clickable timeline</li>
+        <li>Classified policies into sweeps, encampment bans, shelter expansions/closures, PITC-related actions, and citywide action plans</li>
+        <li>Worked on statistical model development and produced the group video</li>
+        <li>Prepared the website presentation of policy and geospatial layers</li>
+      </ul>
+
+      <h3>Timothy Boyd</h3>
+      <ul>
+        <li>Obtained 311 call data from the Get It Done website</li>
+        <li>Cleaned and processed raw call records</li>
+        <li>Created heatmaps of 311 homeless-related calls to identify persistent hotspots</li>
+        <li>Applied topic modeling to understand public sentiment toward homelessness</li>
+      </ul>
+
+      <h3>Jonathan Siegel</h3>
+      <ul>
+        <li>Collected and processed climate datasets including GHCN-Daily, ERA5-Land, and Downtown Homeless Sleepers data</li>
+        <li>Aggregated daily climate data into monthly averages and calculated key indicators such as maximum temperature, precipitation totals, and heat-day counts</li>
+        <li>Standardized climate and homelessness variables using z-scores to enable direct comparison across time</li>
+        <li>Merged climate metrics with monthly homelessness counts to analyze seasonal and environmental patterns</li>
+        <li>Created time-series visualizations showing relationships between heat, precipitation, and unsheltered population trends</li>
+        <li>Identified recurring seasonal patterns, including increased homelessness visibility during warm months and decreases during periods of heavy rainfall</li>
+        <li>Documented data limitations such as missing months, climate dataset size constraints, and challenges with poorly documented environmental datasets</li>
+      </ul>
+
+    </article>
+
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <small>© <span id="y"></span> Project Site</small>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
 </body>
 </html>
